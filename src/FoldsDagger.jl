@@ -1,4 +1,4 @@
-module DaggerFolds
+module FoldsDagger
 
 export DaggerEx, foldx_dagger, transduce_dagger
 

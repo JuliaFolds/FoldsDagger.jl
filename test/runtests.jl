@@ -1,4 +1,4 @@
-module TestDaggerFolds
+module TestFoldsDagger
 using Test
 
 @testset "$file" for file in sort([

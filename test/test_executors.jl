@@ -5,7 +5,7 @@
 module TestExecutors
 
 using FLoops
-using DaggerFolds
+using FoldsDagger
 using Test
 
 function f_sum(executor)

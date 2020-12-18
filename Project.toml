@@ -1,5 +1,5 @@
-name = "DaggerFolds"
-uuid = "2d506161-8b57-4b84-9dc2-7d9962b06721"
+name = "FoldsDagger"
+uuid = "6ad8a699-bbfc-47d2-8448-0e4889534b9c"
 authors = ["Takafumi Arakaki <aka.tkf@gmail.com> and contributors"]
 version = "0.1.0"
 
