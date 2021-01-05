@@ -2,11 +2,19 @@ module FoldsDagger
 
 export DaggerEx, foldx_dagger, transduce_dagger
 
-import FLoops
 using Dagger: delayed
 using SplittablesBase: amount, halve
 using Transducers:
-    Reduced, Transducer, combine, complete, foldl_nocomplete, reduced, start, unreduced
+    Executor,
+    Reduced,
+    Transducers,
+    Transducer,
+    combine,
+    complete,
+    foldl_nocomplete,
+    reduced,
+    start,
+    unreduced
 
 # TODO: Don't import internals from Transducers:
 using Transducers:
@@ -75,15 +83,15 @@ _combine(rf::RF, a, b::Reduced) where {RF} = reduced(combine(rf, a, unreduced(b)
 _combine(rf::RF, a, b) where {RF} = combine(rf, a, b)
 
 """
-    DaggerEx(; simd, basesize)
+    DaggerEx(; simd, basesize) :: Transducers.Executor
 
-FLoops executor implemented using Dagger.jl.
+Fold Executor implemented using Dagger.jl.
 """
-struct DaggerEx{K} <: FLoops.Executor
+struct DaggerEx{K} <: Executor
     kwargs::K
 end
 
-FLoops._fold(rf::RF, init, xs, exc::DaggerEx) where {RF} =
-    foldx_dagger(rf, IdentityTransducer(), xs; exc.kwargs..., init = init)
+Transducers.transduce(xf, rf::RF, init, xs, exc::DaggerEx) where {RF} =
+    transduce_dagger(xf, rf, init, xs; exc.kwargs...)
 
 end
