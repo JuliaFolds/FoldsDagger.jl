@@ -2,9 +2,9 @@ module FoldsDagger
 
 export DaggerEx, foldx_dagger, transduce_dagger
 
-using Base.Iterators: Zip
 using Dagger: delayed
 using SplittablesBase: amount, halve
+using Referenceables: ReferenceableArray, referenceable
 using Transducers:
     Executor,
     Map,

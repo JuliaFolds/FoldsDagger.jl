@@ -189,7 +189,7 @@ uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
 version = "0.8.4"
 
 [[FoldsDagger]]
-deps = ["Dagger", "DaggerArrays", "SplittablesBase", "Transducers"]
+deps = ["Dagger", "DaggerArrays", "Referenceables", "SplittablesBase", "Transducers"]
 path = "../../.."
 uuid = "6ad8a699-bbfc-47d2-8448-0e4889534b9c"
 version = "0.1.0"
@@ -377,6 +377,11 @@ deps = ["Pkg"]
 git-tree-sha1 = "7b1d07f411bc8ddb7977ec7f377b97b158514fe0"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "0.2.0"
+
+[[Referenceables]]
+git-tree-sha1 = "4a32b1dd124a846580608eb347d4337f873c2499"
+uuid = "42d2dcc6-99eb-4e98-b66c-637b7d73030e"
+version = "0.1.0"
 
 [[Requires]]
 deps = ["UUIDs"]
