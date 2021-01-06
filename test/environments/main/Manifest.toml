@@ -115,8 +115,8 @@ version = "0.10.2"
 [[DaggerArrays]]
 deps = ["Dagger", "KernelAbstractions", "LoopVectorization", "TensorOperations", "Tullio"]
 git-tree-sha1 = "25e8f07653fbb3dc9448a211f5c25c1a88d8c774"
-repo-rev = "rm-gg"
-repo-url = "https://github.com/tkf/DaggerArrays.jl"
+repo-rev = "master"
+repo-url = "https://github.com/JuliaParallel/DaggerArrays.jl.git"
 uuid = "32b1f4a6-a95c-4094-806f-97759a50582c"
 version = "0.1.0"
 
