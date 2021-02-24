@@ -7,12 +7,13 @@ using SplittablesBase: amount, halve
 using Transducers:
     Executor,
     Reduced,
-    Transducers,
     Transducer,
+    Transducers,
     combine,
     complete,
     foldl_nocomplete,
     reduced,
+    retransform,
     start,
     unreduced
 
@@ -42,12 +43,13 @@ transduce_dagger(xf::Transducer, op, init, xs; kwargs...) =
     transduce_dagger(xf'(op), init, xs; kwargs...)
 
 function transduce_dagger(
-    rf,
+    rf0,
     init,
-    xs;
+    xs0;
     simd::SIMDFlag = Val(false),
     basesize::Union{Integer,Nothing} = nothing,
 )
+    rf, xs = retransform(rf0, xs0)
     thunk = _delayed_reduce(
         maybe_usesimd(rf, simd),
         init,
