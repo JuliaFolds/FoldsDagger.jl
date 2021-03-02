@@ -1,3 +1,5 @@
+Transducers.executor_type(::DArray) = DaggerEx
+
 struct DAZip{A,M}
     arrays::A  # a tuple of arrays of chunks
     mappers::M  # a tuple functions

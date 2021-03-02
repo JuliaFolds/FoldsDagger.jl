@@ -20,7 +20,13 @@ using Transducers:
 
 # TODO: Don't import internals from Transducers:
 using Transducers:
-    DefaultInit, DefaultInitOf, EmptyResultError, IdentityTransducer, maybe_usesimd, restack
+    DefaultInit,
+    DefaultInitOf,
+    EmptyResultError,
+    IdentityTransducer,
+    maybe_usesimd,
+    restack,
+    retransform
 
 """
     foldx_dagger(op[, xf], xs; init, simd, basesize)
@@ -45,12 +51,13 @@ transduce_dagger(xf::Transducer, op, init, xs; kwargs...) =
 preprocess_darray(_, _) = nothing, nothing
 
 function transduce_dagger(
-    rf,
+    rf0,
     init,
-    xs;
+    xs0;
     simd::SIMDFlag = Val(false),
     basesize::Union{Integer,Nothing} = nothing,
 )
+    rf, xs = retransform(rf0, xs0)
     # TODO: replace Threads.nthreads() with the number of workers
     basesize = max(1, basesize === nothing ? amount(xs) ÷ Threads.nthreads() : basesize)
     rf′, xs′ = preprocess_darray(maybe_usesimd(rf, simd), xs)
