@@ -17,7 +17,7 @@ function preprocess_darray(rf, xs::Iterators.Zip)
         end
     end
     da === nothing && return nothing, nothing
-    blocks = map(last, first(da.subindices).indexes) # find a better way
+    blocks = map(last, first(da.subdomains).indexes) # find a better way
     arrays = map(xs.is) do it
         if it isa DArray
             it
@@ -28,7 +28,7 @@ function preprocess_darray(rf, xs::Iterators.Zip)
             distribute(it, blocks)
         end
     end
-    all(it.subindices == da.subindices for it in arrays) ||
+    all(it.subdomains == da.subdomains for it in arrays) ||
         error("unequal chunking not implemented yet")
 
     mappers = map(xs.is) do it

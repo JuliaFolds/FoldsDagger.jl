@@ -1,6 +1,6 @@
-module TestDaggerArrays
+module TestDArray
 
-using DaggerArrays
+using Dagger
 using FLoops
 using FoldsDagger
 using Test

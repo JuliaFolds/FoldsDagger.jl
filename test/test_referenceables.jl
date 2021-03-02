@@ -1,6 +1,6 @@
 module TestReferenceables
 
-using DaggerArrays
+using Dagger
 using FLoops
 using FoldsDagger
 using Referenceables

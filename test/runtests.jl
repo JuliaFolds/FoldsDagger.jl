@@ -8,8 +8,4 @@ using Test
     include(file)
 end
 
-if FoldsDagger.DaggerArrays !== nothing
-    include("daggerarrays/runtests.jl")
-end
-
 end  # module

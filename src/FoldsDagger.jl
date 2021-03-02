@@ -2,7 +2,7 @@ module FoldsDagger
 
 export DaggerEx, foldx_dagger, transduce_dagger
 
-using Dagger: delayed
+using Dagger: DArray, delayed, distribute
 using SplittablesBase: amount, halve
 using Referenceables: ReferenceableArray, referenceable
 using Transducers:
@@ -21,19 +21,6 @@ using Transducers:
 # TODO: Don't import internals from Transducers:
 using Transducers:
     DefaultInit, DefaultInitOf, EmptyResultError, IdentityTransducer, maybe_usesimd, restack
-
-using DaggerArrays: DaggerArrays, DArray, distribute
-#=
-const DaggerArrays = try
-    Base.require(Base.PkgId(Base.UUID("32b1f4a6-a95c-4094-806f-97759a50582c"), "DaggerArrays"))
-catch
-    nothing
-end
-
-if DaggerArrays !== nothing
-    using .DaggerArrays: DArray
-end
-=#
 
 """
     foldx_dagger(op[, xf], xs; init, simd, basesize)
@@ -128,8 +115,6 @@ end
 Transducers.transduce(xf, rf::RF, init, xs, exc::DaggerEx) where {RF} =
     transduce_dagger(xf, rf, init, xs; exc.kwargs...)
 
-if DaggerArrays !== nothing
-    include("daggerarrays.jl")
-end
+include("darray.jl")
 
 end
