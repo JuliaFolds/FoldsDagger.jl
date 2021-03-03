@@ -6,7 +6,7 @@ using FoldsDagger
 using Referenceables
 using Test
 
-@testset "in-place update" begin
+function test_in_place_module()
     xs = distribute(collect(1:4), Blocks(2))
     @floop DaggerEx() for x in referenceable(xs)
         x[] += 1
@@ -14,7 +14,7 @@ using Test
     @test collect(xs) == 2:5
 end
 
-@testset "copy" begin
+function test_copy()
     xs = distribute(1:4, Blocks(2))
     ys = distribute(zeros(4), Blocks(2))
     @floop DaggerEx() for (y, x) in zip(referenceable(ys), xs)
@@ -23,7 +23,7 @@ end
     @test collect(ys) == 1:4
 end
 
-@testset "fan out" begin
+function test_fan_out()
     xs = distribute(1:4, Blocks(2))
     ys = distribute(zeros(4), Blocks(2))
     zs = distribute(zeros(4), Blocks(2))

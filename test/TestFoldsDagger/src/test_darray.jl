@@ -6,7 +6,7 @@ using Folds
 using FoldsDagger
 using Test
 
-@testset "1d" begin
+function test_1d()
     @testset for n in 1:4
         A = distribute(1:4, Blocks(n))
         @test foldx_dagger(+, A) == sum(1:4)
@@ -14,7 +14,7 @@ using Test
     end
 end
 
-@testset "2d" begin
+function test_2d()
     @testset for n in 1:4, m in 1:3
         A = distribute(reshape(1:24, (4, 6)), Blocks(n, m))
         @test foldx_dagger(+, A) == sum(1:24)
