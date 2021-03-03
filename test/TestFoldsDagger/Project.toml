@@ -5,6 +5,9 @@ version = "0.1.0"
 
 [deps]
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+Dagger = "d58978e5-989f-55fb-8d15-ea34adc7bf54"
 FLoops = "cc61a311-1640-44b5-9fba-1b764f453329"
+Folds = "41a02a25-b8f0-4f67-bc48-60067656b558"
 FoldsDagger = "6ad8a699-bbfc-47d2-8448-0e4889534b9c"
+Referenceables = "42d2dcc6-99eb-4e98-b66c-637b7d73030e"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

@@ -2,10 +2,12 @@ module FoldsDagger
 
 export DaggerEx, foldx_dagger, transduce_dagger
 
-using Dagger: delayed
+using Dagger: DArray, delayed, distribute
 using SplittablesBase: amount, halve
+using Referenceables: ReferenceableArray, referenceable
 using Transducers:
     Executor,
+    Map,
     Reduced,
     Transducer,
     Transducers,
@@ -13,13 +15,18 @@ using Transducers:
     complete,
     foldl_nocomplete,
     reduced,
-    retransform,
     start,
     unreduced
 
 # TODO: Don't import internals from Transducers:
 using Transducers:
-    DefaultInit, DefaultInitOf, EmptyResultError, IdentityTransducer, maybe_usesimd, restack
+    DefaultInit,
+    DefaultInitOf,
+    EmptyResultError,
+    IdentityTransducer,
+    maybe_usesimd,
+    restack,
+    retransform
 
 """
     foldx_dagger(op[, xf], xs; init, simd, basesize)
@@ -34,13 +41,14 @@ const SIMDFlag = Union{Bool,Symbol,Val{true},Val{false},Val{:ivdep}}
 issmall(reducible, basesize) = amount(reducible) <= basesize
 
 foldx_dagger(op, xs; init = DefaultInit, kwargs...) =
-    unreduced(transduce_dagger(op, init, xs; kwargs...))
+    Transducers.fold(op, xs, DaggerEx(; kwargs...); init = init)
 
-foldx_dagger(op, xf, xs; init = DefaultInit, kwargs...) =
-    unreduced(transduce_dagger(xf, op, init, xs; kwargs...))
+foldx_dagger(op, xf, xs; kwargs...) = foldx_dagger(op, xf(xs); kwargs...)
 
 transduce_dagger(xf::Transducer, op, init, xs; kwargs...) =
     transduce_dagger(xf'(op), init, xs; kwargs...)
+
+preprocess_darray(_, _) = nothing, nothing
 
 function transduce_dagger(
     rf0,
@@ -50,12 +58,14 @@ function transduce_dagger(
     basesize::Union{Integer,Nothing} = nothing,
 )
     rf, xs = retransform(rf0, xs0)
-    thunk = _delayed_reduce(
-        maybe_usesimd(rf, simd),
-        init,
-        xs,
-        max(1, basesize === nothing ? amount(xs) ÷ Threads.nthreads() : basesize),
-    )
+    # TODO: replace Threads.nthreads() with the number of workers
+    basesize = max(1, basesize === nothing ? amount(xs) ÷ Threads.nthreads() : basesize)
+    rf′, xs′ = preprocess_darray(maybe_usesimd(rf, simd), xs)
+    if xs′ !== nothing
+        thunk = _transduce_darray(rf′, init, xs′, basesize)
+    else
+        thunk = _delayed_reduce(maybe_usesimd(rf, simd), init, xs, basesize)
+    end
     acc = collect(thunk)
     result = complete(rf, acc)
     if unreduced(result) isa DefaultInitOf
@@ -84,6 +94,22 @@ _combine(rf, a::Reduced, b) = a
 _combine(rf::RF, a, b::Reduced) where {RF} = reduced(combine(rf, a, unreduced(b)))
 _combine(rf::RF, a, b) where {RF} = combine(rf, a, b)
 
+_mapreduce(f, op, init, xs) =
+    if length(xs) == 0
+        start(op, init)
+    elseif length(xs) == 1
+        a, = xs
+        f(a)
+    elseif length(xs) == 2
+        a, b = xs
+        op(f(a), f(b))
+    else
+        left, right = halve(xs)
+        a = _mapreduce(f, op, init, left)
+        b = _mapreduce(f, op, init, right)
+        op(a, b)
+    end
+
 """
     DaggerEx(; simd, basesize) :: Transducers.Executor
 
@@ -95,5 +121,7 @@ end
 
 Transducers.transduce(xf, rf::RF, init, xs, exc::DaggerEx) where {RF} =
     transduce_dagger(xf, rf, init, xs; exc.kwargs...)
+
+include("darray.jl")
 
 end
