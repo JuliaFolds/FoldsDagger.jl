@@ -293,6 +293,12 @@ version = "1.2.2"
 deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
+[[TestFoldsDagger]]
+deps = ["Distributed", "FLoops", "FoldsDagger", "Test"]
+path = "../../TestFoldsDagger"
+uuid = "b1452fb3-3910-4410-af0b-f02876c9a81b"
+version = "0.1.0"
+
 [[Transducers]]
 deps = ["ArgCheck", "BangBang", "CompositionsBase", "DefineSingletons", "Distributed", "InitialValues", "Logging", "Markdown", "MicroCollections", "Requires", "Setfield", "SplittablesBase", "Tables"]
 git-tree-sha1 = "266420fe31e9c86abcf0d4905c75b67dac087c33"

@@ -105,23 +105,25 @@ function f_find_goto(executor)
     return (:found, s)
 end
 
-@testset "$f" for (f, desired) in [
-    (f_sum, 55),
-    (f_filter_sum, 25),
-    (f_sum_nested_loop, 220),
-    (f_sum_update, 50),
-    (f_sum_op_init, 50),
-    (f_count_update, 5),
-    (f_count_op_init, 5),
-    (f_sum_continue, 10),
-    (f_sum_break, 6),
-    (f_find_return, (:found, 3)),
-    (f_find_goto, (:found, 3)),
-]
-    @test f(SequentialEx()) === desired
-    @test f(DaggerEx()) === desired
-    @testset for basesize in 2:10
-        @test f(DaggerEx(basesize = 2)) === desired
+function test_executors()
+    @testset "$f" for (f, desired) in [
+        (f_sum, 55),
+        (f_filter_sum, 25),
+        (f_sum_nested_loop, 220),
+        (f_sum_update, 50),
+        (f_sum_op_init, 50),
+        (f_count_update, 5),
+        (f_count_op_init, 5),
+        (f_sum_continue, 10),
+        (f_sum_break, 6),
+        (f_find_return, (:found, 3)),
+        (f_find_goto, (:found, 3)),
+    ]
+        @test f(SequentialEx()) === desired
+        @test f(DaggerEx()) === desired
+        @testset for basesize in 2:10
+            @test f(DaggerEx(basesize = 2)) === desired
+        end
     end
 end
 
