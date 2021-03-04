@@ -1,33 +1,3 @@
-module FoldsDagger
-
-export DaggerEx, foldx_dagger, transduce_dagger
-
-using Dagger: DArray, delayed, distribute
-using SplittablesBase: amount, halve
-using Referenceables: ReferenceableArray, referenceable
-using Transducers:
-    Executor,
-    Map,
-    Reduced,
-    Transducer,
-    Transducers,
-    combine,
-    complete,
-    foldl_nocomplete,
-    reduced,
-    start,
-    unreduced
-
-# TODO: Don't import internals from Transducers:
-using Transducers:
-    DefaultInit,
-    DefaultInitOf,
-    EmptyResultError,
-    IdentityTransducer,
-    maybe_usesimd,
-    restack,
-    retransform
-
 """
     foldx_dagger(op[, xf], xs; init, simd, basesize)
     transduce_dagger(op[, xf], init, xs; simd, basesize)
@@ -121,7 +91,3 @@ end
 
 Transducers.transduce(xf, rf::RF, init, xs, exc::DaggerEx) where {RF} =
     transduce_dagger(xf, rf, init, xs; exc.kwargs...)
-
-include("darray.jl")
-
-end
