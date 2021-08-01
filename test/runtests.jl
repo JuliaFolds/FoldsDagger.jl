@@ -1,2 +1,2 @@
-include("load.jl")
-TestFoldsDagger.runtests()
+using TestFunctionRunner
+TestFunctionRunner.@run

@@ -159,6 +159,12 @@ uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 deps = ["Libdl"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
+[[LoadAllPackages]]
+deps = ["Pkg"]
+git-tree-sha1 = "de9eababca8fdc9b6b207ed05f99693faa608230"
+uuid = "b37bcd2d-1570-475d-a8c6-9b4fae6d0ba9"
+version = "0.1.0"
+
 [[Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
@@ -312,9 +318,17 @@ deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[TestFoldsDagger]]
-deps = ["Dagger", "Distributed", "FLoops", "Folds", "FoldsDagger", "Referenceables", "Test"]
+deps = ["Dagger", "FLoops", "Folds", "FoldsDagger", "Referenceables", "Test"]
 path = "../../TestFoldsDagger"
 uuid = "b1452fb3-3910-4410-af0b-f02876c9a81b"
+version = "0.1.0"
+
+[[TestFunctionRunner]]
+deps = ["Distributed", "LoadAllPackages", "Pkg", "Test"]
+git-tree-sha1 = "4e314f5547d237ac8af3686200bfb2a3a36ecf14"
+repo-rev = "master"
+repo-url = "https://github.com/tkf/TestFunctionRunner.jl"
+uuid = "792026f5-ac9a-4a19-adcb-47b0ce2deb5d"
 version = "0.1.0"
 
 [[Transducers]]
