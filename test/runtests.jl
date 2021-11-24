@@ -1,7 +1,9 @@
 if get(ENV, "CI", "false") == "true"
     using Distributed
-    if nprocs() < 4
-        addprocs(4 - nprocs())
+    let n = 2
+        if nprocs() < n
+            addprocs(n - nprocs())
+        end
     end
 end
 
