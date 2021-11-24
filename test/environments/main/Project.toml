@@ -1,2 +1,4 @@
 [deps]
+Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 TestFoldsDagger = "b1452fb3-3910-4410-af0b-f02876c9a81b"
+TestFunctionRunner = "792026f5-ac9a-4a19-adcb-47b0ce2deb5d"

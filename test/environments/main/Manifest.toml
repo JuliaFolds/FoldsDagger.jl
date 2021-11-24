@@ -86,9 +86,9 @@ version = "0.1.2"
 
 [[Dagger]]
 deps = ["Colors", "Distributed", "LinearAlgebra", "MemPool", "Profile", "Random", "Requires", "Serialization", "SharedArrays", "SparseArrays", "Statistics", "StatsBase", "TableOperations", "Tables", "UUIDs"]
-git-tree-sha1 = "4d6bd62ddb2c14d3920301ab251c177c9de04569"
+git-tree-sha1 = "3f3f322f81edff803759abb8e2c72f38eeda4086"
 uuid = "d58978e5-989f-55fb-8d15-ea34adc7bf54"
-version = "0.13.1"
+version = "0.13.7"
 
 [[DataAPI]]
 git-tree-sha1 = "cc70b17275652eb47bc9e5f81635981f13cea5c8"
@@ -220,6 +220,12 @@ uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 [[LinearAlgebra]]
 deps = ["Libdl"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[LoadAllPackages]]
+deps = ["Pkg"]
+git-tree-sha1 = "de9eababca8fdc9b6b207ed05f99693faa608230"
+uuid = "b37bcd2d-1570-475d-a8c6-9b4fae6d0ba9"
+version = "0.1.0"
 
 [[LogExpFunctions]]
 deps = ["ChainRulesCore", "ChangesOfVariables", "DocStringExtensions", "InverseFunctions", "IrrationalConstants", "LinearAlgebra"]
@@ -411,15 +417,26 @@ version = "1.6.0"
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
 
+[[Terminators]]
+git-tree-sha1 = "e72e157c08773595052733e8b39944a49b0109d9"
+uuid = "b0858c3f-a9bf-4cba-a0e3-6aaeea5477ac"
+version = "0.1.1"
+
 [[Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[TestFoldsDagger]]
-deps = ["Dagger", "Distributed", "FLoops", "Folds", "FoldsDagger", "Referenceables", "Test"]
+deps = ["Dagger", "FLoops", "Folds", "FoldsDagger", "Referenceables", "Test"]
 path = "../../TestFoldsDagger"
 uuid = "b1452fb3-3910-4410-af0b-f02876c9a81b"
 version = "0.1.0"
+
+[[TestFunctionRunner]]
+deps = ["Distributed", "LoadAllPackages", "Pkg", "Terminators", "Test"]
+git-tree-sha1 = "5e58b00d31869b4972aad04e6b34558653b2831f"
+uuid = "792026f5-ac9a-4a19-adcb-47b0ce2deb5d"
+version = "0.1.3"
 
 [[Transducers]]
 deps = ["Adapt", "ArgCheck", "BangBang", "Baselet", "CompositionsBase", "DefineSingletons", "Distributed", "InitialValues", "Logging", "Markdown", "MicroCollections", "Requires", "Setfield", "SplittablesBase", "Tables"]
