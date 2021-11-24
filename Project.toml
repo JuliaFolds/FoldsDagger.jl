@@ -10,6 +10,10 @@ SplittablesBase = "171d559e-b47b-412a-8079-5efa626c420e"
 Transducers = "28d57a85-8fef-5791-bfe6-a80928e7c999"
 
 [compat]
+Dagger = "0.13"
+Referenceables = "0.1"
+SplittablesBase = "0.1"
+Transducers = "0.4"
 julia = "1"
 
 [extras]
