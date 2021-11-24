@@ -2,7 +2,8 @@ module FoldsDagger
 
 export DaggerEx, foldx_dagger, transduce_dagger
 
-using Dagger: DArray, delayed, distribute
+using Dagger
+using Dagger: DArray, distribute
 using SplittablesBase: amount, halve
 using Referenceables: ReferenceableArray, referenceable
 using Transducers:
