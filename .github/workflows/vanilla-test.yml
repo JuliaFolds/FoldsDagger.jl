@@ -1,4 +1,4 @@
-name: Run tests
+name: Run test via Pkg.test()
 
 on:
   push:
@@ -27,5 +27,5 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           file: ./lcov.info
-          flags: unittests
+          flags: Pkg.test
           name: codecov-umbrella
