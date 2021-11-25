@@ -1,6 +1,3 @@
-const Pkg = Base.require(Base.PkgId(Base.UUID(0x44cfe95a1eb252eab672e2afdf69b78f), "Pkg"))
-Pkg.pkg"add TestFunctionRunner#fix-distributed"
-
 if get(ENV, "CI", "false") == "true"
     using Distributed
     let n = 2
