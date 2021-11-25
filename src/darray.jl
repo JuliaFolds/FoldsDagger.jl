@@ -52,7 +52,7 @@ end
 function _transduce_darray(rf, init, xs::DAZip, _basesize)
     # TODO: further divide each chunk into `basesize`
     mappers = xs.mappers
-    f(chunks) = delayed(_reduce_basecase_zip)(rf, init, mappers, chunks...)
-    op(a, b) = delayed(_combine)(rf, a, b)
+    f(chunks) = Dagger.@spawn _reduce_basecase_zip(rf, init, mappers, chunks...)
+    op(a, b) = Dagger.@spawn _combine(rf, a, b)
     return _mapreduce(f, op, init, zip((A.chunks for A in xs.arrays)...))
 end

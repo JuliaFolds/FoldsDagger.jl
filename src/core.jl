@@ -36,7 +36,7 @@ function transduce_dagger(
     else
         thunk = _delayed_reduce(maybe_usesimd(rf, simd), init, xs, basesize)
     end
-    acc = collect(thunk)
+    acc = fetch(thunk)
     result = complete(rf, acc)
     if unreduced(result) isa DefaultInitOf
         throw(EmptyResultError(rf))
@@ -46,19 +46,19 @@ end
 
 function _delayed_reduce(rf, init, xs, basesize)
     if amount(xs) <= basesize
-        return delayed(_reduce_basecase)(rf, init, xs)
+        return Dagger.@spawn _reduce_basecase(rf, init, xs)
     end
     left, right = halve(xs)
     a = _delayed_reduce(rf, init, left, basesize)
     b = _delayed_reduce(rf, init, right, basesize)
-    return delayed(_combine)(rf, a, b)
+    return Dagger.@spawn _combine(rf, a, b)
 end
 
 @noinline _reduce_basecase(rf::F, init::I, reducible) where {F,I} =
     restack(foldl_nocomplete(rf, start(rf, init), reducible))
 
 # Semantically correct but inefficient (eager) handling of `Reduced`.
-# Not sure how to cancel `delayed` computation.
+# Not sure how to cancel `@spawn` computation.
 _combine(rf, a::Reduced, b::Reduced) = a
 _combine(rf, a::Reduced, b) = a
 _combine(rf::RF, a, b::Reduced) where {RF} = reduced(combine(rf, a, unreduced(b)))
